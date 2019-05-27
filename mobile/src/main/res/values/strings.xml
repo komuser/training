@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">training_hagita</string>
+    <string name="hello">こんにちは世界</string>
+    <string name="upload">アップロード</string>
+    <string name="detail">詳細</string>
+
+    <string name="fragment_list">PhotoListFragment</string>
+    <string name="fragment_detail">PhotoDetailFragment</string>
+</resources>
