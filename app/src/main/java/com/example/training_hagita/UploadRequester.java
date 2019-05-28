@@ -169,4 +169,8 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
     public void onPostExecute(String string) {
         mCallback.onPostExecute(string);
     }
+
+    public void addFile(String path, String title) {
+        mFileList.add(path);
+    }
 }
