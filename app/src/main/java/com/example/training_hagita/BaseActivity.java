@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
+    public static final int REQUEST_NONE = 0;
+    public static final int REQUEST_PHOTO_LIST = 1;
+    public static final int REQUEST_PHOTO_DETAIL = 2;
+
     protected void startFragmentForResult(BaseFragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -35,5 +39,9 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             onRequestPermissionsResult(requestCode, list, result);
         }
+    }
+
+    protected void onFragmentResult(int requestCode, int resultCode, Intent intent) {
+
     }
 }

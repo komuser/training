@@ -23,14 +23,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView id;
         TextView title;
         TextView path;
 
         ViewHolder(View view) {
             super(view);
             this.image = (ImageView) view.findViewById(R.id.image);
-            this.id = (TextView) view.findViewById(R.id.id);
             this.title = (TextView) view.findViewById(R.id.title);
             this.path = (TextView) view.findViewById(R.id.path);
         }
@@ -59,10 +57,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-       holder.image.setImageBitmap(mList.get(position).getImage());
-       holder.id.setText(mList.get(position).getId());
-       holder.title.setText(mList.get(position).getTitle());
-       holder.id.setText(mList.get(position).getPath());
+        holder.image.setImageBitmap(mList.get(position).getImage());
+        holder.title.setText(mList.get(position).getTitle());
+        holder.path.setText(mList.get(position).getPath());
     }
 
     @Override
