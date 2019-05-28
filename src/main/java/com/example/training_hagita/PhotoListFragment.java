@@ -1,6 +1,7 @@
 package com.example.training_hagita;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -48,10 +49,10 @@ public class PhotoListFragment extends BaseFragment {
             protected void onRecyclerViewClicked(PhotoDao photoDao) {
                 super.onRecyclerViewClicked(photoDao);
 
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new PhotoDetailFragment());
-                fragmentTransaction.commit();
+                Intent intent = new Intent();
+                intent.putExtra("PATH", photoDao.getPath());
+                intent.putExtra("FILE_NAME", photoDao.getTitle());
+                finishFragment(intent);
             }
         };
         mRecyclerView.setAdapter(photoAdapter);
@@ -66,7 +67,6 @@ public class PhotoListFragment extends BaseFragment {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     PhotoDao dao = new PhotoDao();
-                    dao.setId(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
                     dao.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.TITLE)));
                     dao.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
                     long image = cursor.getLong(cursor.getColumnIndex("_id"));
@@ -79,5 +79,9 @@ public class PhotoListFragment extends BaseFragment {
             Log.d(TAG, "例外 = " + e);
         }
         return list;
+    }
+
+    protected int getRequestCode() {
+        return BaseActivity.REQUEST_PHOTO_LIST;
     }
 }

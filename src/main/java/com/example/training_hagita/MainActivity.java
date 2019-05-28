@@ -1,6 +1,7 @@
 package com.example.training_hagita;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,18 @@ public class MainActivity extends BaseActivity {
                 // 権限拒否
                 finish();
             }
+        }
+    }
+
+    @Override
+    protected void onFragmentResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_PHOTO_LIST) {
+            PhotoDetailFragment fragment = new PhotoDetailFragment();
+            fragment.setArguments(intent.getExtras());
+            startFragmentForResult(fragment);
+        } else if (requestCode == REQUEST_PHOTO_DETAIL) {
+            PhotoListFragment fragment = new PhotoListFragment();
+            startFragmentForResult(fragment);
         }
     }
 }
