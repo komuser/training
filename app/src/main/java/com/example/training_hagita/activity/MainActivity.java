@@ -1,10 +1,14 @@
-package com.example.training_hagita;
+package com.example.training_hagita.activity;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import com.example.training_hagita.fragment.PhotoDetailFragment;
+import com.example.training_hagita.fragment.PhotoListFragment;
+import com.example.training_hagita.R;
 
 public class MainActivity extends BaseActivity {
 
@@ -33,7 +37,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onFragmentResult(int requestCode, int resultCode, Intent intent) {
+    public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_PHOTO_LIST) {
             PhotoDetailFragment fragment = new PhotoDetailFragment();
             fragment.setArguments(intent.getExtras());

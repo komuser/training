@@ -1,4 +1,4 @@
-package com.example.training_hagita;
+package com.example.training_hagita.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.training_hagita.R;
+import com.example.training_hagita.asynctask.UploadRequester;
+import com.example.training_hagita.activity.BaseActivity;
 
 public class PhotoDetailFragment extends BaseFragment {
 
