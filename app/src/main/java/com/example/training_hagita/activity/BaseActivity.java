@@ -12,9 +12,11 @@ import com.example.training_hagita.R;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public static final int REQUEST_NONE = 0;
-    public static final int REQUEST_PHOTO_LIST = 1;
-    public static final int REQUEST_PHOTO_DETAIL = 2;
+    public enum Request {
+        REQUEST_NONE,
+        REQUEST_PHOTO_LIST,
+        REQUEST_PHOTO_DETAIL;
+    }
 
     protected void startFragmentForResult(BaseFragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -23,10 +25,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void checkPermission(String permission, int requestCode) {
-        String[] list = new String[] {Manifest.permission.READ_EXTERNAL_STORAGE};
-        int[] result = new int[] {PackageManager.PERMISSION_GRANTED};
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED){
+        String[] list = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+        int[] result = new int[]{PackageManager.PERMISSION_GRANTED};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
                 // パーミッションありの場合
                 onRequestPermissionsResult(requestCode, list, result);
             } else {
