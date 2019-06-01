@@ -13,12 +13,11 @@ import com.example.training_hagita.R;
 
 import java.util.List;
 
-public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
+public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
     private LayoutInflater mLayoutInflater;
     private List<PhotoDao> mList;
 
-    protected void onRecyclerViewClicked(PhotoDao photoDao) {
-    }
+    protected abstract void onRecyclerViewClicked(PhotoDao photoDao);
 
     public PhotoAdapter(List<PhotoDao> list) {
         this.mList = list;

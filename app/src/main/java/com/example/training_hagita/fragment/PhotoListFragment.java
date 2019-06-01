@@ -50,8 +50,6 @@ public class PhotoListFragment extends BaseFragment {
         PhotoAdapter photoAdapter = new PhotoAdapter(photoDao) {
             @Override
             protected void onRecyclerViewClicked(PhotoDao photoDao) {
-                super.onRecyclerViewClicked(photoDao);
-
                 Intent intent = new Intent();
                 intent.putExtra("PATH", photoDao.getPath());
                 intent.putExtra("FILE_NAME", photoDao.getTitle());
