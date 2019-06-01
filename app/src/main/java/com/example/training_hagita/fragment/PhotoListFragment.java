@@ -85,6 +85,6 @@ public class PhotoListFragment extends BaseFragment {
     }
 
     protected int getRequestCode() {
-        return BaseActivity.REQUEST_PHOTO_LIST;
+        return BaseActivity.Request.REQUEST_PHOTO_LIST.ordinal();
     }
 }

@@ -17,7 +17,7 @@ public class BaseFragment extends Fragment {
         }
     }
     protected int getRequestCode() {
-        return BaseActivity.REQUEST_NONE;
+        return BaseActivity.Request.REQUEST_NONE.ordinal();
     }
 
     protected void setResult(int result) {

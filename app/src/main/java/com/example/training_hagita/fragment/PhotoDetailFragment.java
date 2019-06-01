@@ -75,6 +75,6 @@ public class PhotoDetailFragment extends BaseFragment {
     }
 
     protected int getRequestCode() {
-        return BaseActivity.REQUEST_PHOTO_DETAIL;
+        return BaseActivity.Request.REQUEST_PHOTO_DETAIL.ordinal();
     }
 }
