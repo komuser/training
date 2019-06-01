@@ -1,4 +1,4 @@
-package com.example.training_hagita;
+package com.example.training_hagita.dao;
 
 import android.graphics.Bitmap;
 

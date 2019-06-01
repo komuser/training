@@ -1,4 +1,4 @@
-package com.example.training_hagita;
+package com.example.training_hagita.asynctask;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.icu.lang.UCharacter.LineBreak.LINE_FEED;
-import static android.provider.Telephony.Mms.Part.CHARSET;
 
 public class UploadRequester extends AsyncTask<String, Void, String> {
 
@@ -45,7 +42,7 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
     private UploadCallback mCallback;
 
     // コンストラクタ
-    UploadRequester(UploadCallback callback) {
+    public UploadRequester(UploadCallback callback) {
         mCallback = callback;
     }
 

@@ -1,4 +1,4 @@
-package com.example.training_hagita;
+package com.example.training_hagita.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.training_hagita.dao.PhotoDao;
+import com.example.training_hagita.R;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     protected void onRecyclerViewClicked(PhotoDao photoDao) {
     }
 
-    PhotoAdapter(List<PhotoDao> list) {
+    public PhotoAdapter(List<PhotoDao> list) {
         this.mList = list;
     }
 

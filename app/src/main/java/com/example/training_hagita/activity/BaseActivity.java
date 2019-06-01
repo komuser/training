@@ -1,4 +1,4 @@
-package com.example.training_hagita;
+package com.example.training_hagita.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.training_hagita.fragment.BaseFragment;
+import com.example.training_hagita.R;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -41,7 +44,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void onFragmentResult(int requestCode, int resultCode, Intent intent) {
+    public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
 
     }
 }
