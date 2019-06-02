@@ -13,7 +13,7 @@ import com.example.training_hagita.R;
 
 import java.util.List;
 
-public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
+public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.RecyclerViewHolder> {
     private LayoutInflater mLayoutInflater;
     private List<PhotoDao> mList;
 
@@ -23,12 +23,12 @@ public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.Vie
         this.mList = list;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView title;
-        TextView path;
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        private ImageView image;
+        private TextView title;
+        private TextView path;
 
-        ViewHolder(View view) {
+        RecyclerViewHolder(View view) {
             super(view);
             this.image = (ImageView) view.findViewById(R.id.image);
             this.title = (TextView) view.findViewById(R.id.title);
@@ -38,11 +38,11 @@ public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.Vie
 
     @NonNull
     @Override
-    public PhotoAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int position) {
+    public RecyclerViewHolder onCreateViewHolder(final ViewGroup parent, int position) {
 
         // 再利用できるViewがなかったらLayoutInflaterを使ってrow.xmlをViewにする
         View inflate = mLayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
-        final ViewHolder viewHolder = new ViewHolder(inflate);
+        final RecyclerViewHolder viewHolder = new RecyclerViewHolder(inflate);
 
         viewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +58,7 @@ public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.Vie
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
         holder.image.setImageBitmap(mList.get(position).getImage());
         holder.title.setText(mList.get(position).getTitle());
         holder.path.setText(mList.get(position).getPath());
