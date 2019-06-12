@@ -23,21 +23,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void checkPermission(String permission, int requestCode) {
-        String[] list = new String[] {Manifest.permission.READ_EXTERNAL_STORAGE};
-        int[] result = new int[] {PackageManager.PERMISSION_GRANTED};
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED){
+        String[] list = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+        int[] result = new int[]{PackageManager.PERMISSION_GRANTED};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
                 // パーミッションありの場合
                 onRequestPermissionsResult(requestCode, list, result);
             } else {
                 // パーミッションなしの場合
-                if (shouldShowRequestPermissionRationale(permission)) {
-                    // 以前にパーミッションを拒否している場合
-                    requestPermissions(list, requestCode);
-                } else {
-                    // 最初のパーミッションリクエストの場合
-                    requestPermissions(list, requestCode);
-                }
+                requestPermissions(list, requestCode);
             }
         } else {
             onRequestPermissionsResult(requestCode, list, result);

@@ -1,15 +1,16 @@
 package com.example.training_hagita.activity;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.example.training_hagita.R;
+import com.example.training_hagita.db.PhotoDBHelper;
 import com.example.training_hagita.fragment.PhotoDetailFragment;
 import com.example.training_hagita.fragment.PhotoListFragment;
-import com.example.training_hagita.R;
 
 public class MainActivity extends BaseActivity {
 
@@ -19,6 +20,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle saveInstanceStatus) {
         super.onCreate(saveInstanceStatus);
         setContentView(R.layout.activity_main);
+
+        PhotoDBHelper photoDBHelper = new PhotoDBHelper(this);
+        SQLiteDatabase sqLiteDatabase = photoDBHelper.getWritableDatabase();
+        photoDBHelper.onCreate(sqLiteDatabase);
 
         checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_PERMISSION);
     }
