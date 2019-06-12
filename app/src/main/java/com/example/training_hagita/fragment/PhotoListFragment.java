@@ -50,8 +50,6 @@ public class PhotoListFragment extends BaseFragment {
         PhotoAdapter photoAdapter = new PhotoAdapter(photoDao) {
             @Override
             protected void onRecyclerViewClicked(PhotoDao photoDao) {
-                super.onRecyclerViewClicked(photoDao);
-
                 Intent intent = new Intent();
                 intent.putExtra("ID", photoDao.getId());
                 intent.putExtra("PATH", photoDao.getPath());
@@ -89,6 +87,6 @@ public class PhotoListFragment extends BaseFragment {
     }
 
     protected int getRequestCode() {
-        return BaseActivity.REQUEST_PHOTO_LIST;
+        return BaseActivity.Request.REQUEST_PHOTO_LIST.ordinal();
     }
 }

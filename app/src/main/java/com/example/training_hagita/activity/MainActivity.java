@@ -44,11 +44,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_PHOTO_LIST) {
+        if (requestCode == Request.REQUEST_PHOTO_LIST.ordinal()) {
             PhotoDetailFragment fragment = new PhotoDetailFragment();
             fragment.setArguments(intent.getExtras());
             startFragmentForResult(fragment);
-        } else if (requestCode == REQUEST_PHOTO_DETAIL) {
+        } else if (requestCode == Request.REQUEST_PHOTO_DETAIL.ordinal()) {
             PhotoListFragment fragment = new PhotoListFragment();
             startFragmentForResult(fragment);
         }

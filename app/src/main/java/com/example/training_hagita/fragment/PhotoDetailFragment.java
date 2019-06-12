@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.training_hagita.R;
+import com.example.training_hagita.asynctask.UploadCallback;
 import com.example.training_hagita.asynctask.UploadRequester;
 import com.example.training_hagita.activity.BaseActivity;
 import com.example.training_hagita.db.PhotoDBHelper;
@@ -54,7 +55,7 @@ public class PhotoDetailFragment extends BaseFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadRequester uploadRequester = new UploadRequester(new UploadRequester.UploadCallback() {
+                UploadRequester uploadRequester = new UploadRequester(new UploadCallback() {
                     @Override
                     public void onPreExecute() {
 
@@ -101,6 +102,6 @@ public class PhotoDetailFragment extends BaseFragment {
     }
 
     protected int getRequestCode() {
-        return BaseActivity.REQUEST_PHOTO_DETAIL;
+        return BaseActivity.Request.REQUEST_PHOTO_DETAIL.ordinal();
     }
 }

@@ -31,13 +31,6 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
     private static final int CONNECT_TIMEOUT = 5 * 1000;
     private static final int READ_TIMEOUT = 5 * 1000;
 
-    // コールバックインタフェース
-    public interface UploadCallback {
-        void onPreExecute();
-        void onProgressUpdate();
-        void onPostExecute(String string);
-    }
-
     // コールバック
     private UploadCallback mCallback;
 
