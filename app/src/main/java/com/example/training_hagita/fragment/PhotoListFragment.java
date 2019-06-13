@@ -50,11 +50,11 @@ public class PhotoListFragment extends BaseFragment {
         PhotoAdapter photoAdapter = new PhotoAdapter(photoDao) {
             @Override
             protected void onRecyclerViewClicked(PhotoDao photoDao) {
-                super.onRecyclerViewClicked(photoDao);
-
                 Intent intent = new Intent();
+                intent.putExtra("ID", photoDao.getId());
                 intent.putExtra("PATH", photoDao.getPath());
                 intent.putExtra("FILE_NAME", photoDao.getTitle());
+                intent.putExtra("DESCRIPTION", photoDao.getDescription());
                 finishFragment(intent);
             }
         };
@@ -70,8 +70,10 @@ public class PhotoListFragment extends BaseFragment {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     PhotoDao dao = new PhotoDao();
+                    dao.setId(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
                     dao.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.TITLE)));
                     dao.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
+                    dao.setDescription(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DESCRIPTION)));
                     long image = cursor.getLong(cursor.getColumnIndex("_id"));
                     Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail(contentResolver, image, MediaStore.Images.Thumbnails.MICRO_KIND, null);
                     dao.setImage(thumbnail);
@@ -85,6 +87,6 @@ public class PhotoListFragment extends BaseFragment {
     }
 
     protected int getRequestCode() {
-        return BaseActivity.REQUEST_PHOTO_LIST;
+        return BaseActivity.Request.REQUEST_PHOTO_LIST.ordinal();
     }
 }
