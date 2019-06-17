@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.training_hagita.R;
+import com.example.training_hagita.Util.KeyLock;
 import com.example.training_hagita.asynctask.UploadCallback;
 import com.example.training_hagita.asynctask.UploadRequester;
 import com.example.training_hagita.activity.BaseActivity;
@@ -56,47 +57,55 @@ public class PhotoDetailFragment extends BaseFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadRequester uploadRequester = new UploadRequester(new UploadCallback() {
-                    @Override
-                    public void onPreExecute() {
+                if (!KeyLock.isKeyHit()) {
+                    showProgress();
+                    UploadRequester uploadRequester = new UploadRequester(new UploadCallback() {
+                        @Override
+                        public void onPreExecute() {
 
+                        }
+
+                        @Override
+                        public void onProgressUpdate() {
+
+                        }
+
+                        @Override
+                        public void onPostExecute(String string) {
+                            dismissProgress();
+                        }
+                    });
+                    Bundle bundle = getArguments();
+                    if (bundle != null) {
+                        mPath = bundle.getString("PATH", "");
+                        mTitle = bundle.getString("FILE_NAME", "");
+                        mDescription = bundle.getString("DESCRIPTION", "");
                     }
+                    uploadRequester.addFile(mPath, mTitle);
+                    uploadRequester.execute(UPLOAD_SERVER);
 
-                    @Override
-                    public void onProgressUpdate() {
-
-                    }
-
-                    @Override
-                    public void onPostExecute(String string) {
-
-                    }
-                });
-                Bundle bundle = getArguments();
-                if (bundle != null) {
-                    mId = bundle.getString("ID", "");
-                    mPath = bundle.getString("PATH","");
-                    mTitle = bundle.getString("FILE_NAME", "");
-                    mDescription = bundle.getString("DESCRIPTION", "");
-                }
-                uploadRequester.addFile(mPath, mTitle);
-                uploadRequester.execute(UPLOAD_SERVER);
-
-                mDBHelper = new PhotoDBHelper(getActivity());
-                mDBHelper.insertValues(mId, mPath, mTitle, mDescription);
+                    mDBHelper = new PhotoDBHelper(getActivity());
+                    mDBHelper.insertValues(mPath, mTitle, mDescription);
 
 //                Intent intent = new Intent();
 //                finishFragment(intent);
+                }
             }
         });
-        
+
         Button deleteButton = view.findViewById(R.id.delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
-                photoDBHelper.deleteValues(mId);
-                Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
+                if (!KeyLock.isKeyHit()) {
+                    Bundle bundle = getArguments();
+                    if (bundle != null) {
+                        mId = bundle.getString("ID", "");
+                    }
+                    PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
+                    photoDBHelper.deleteValues(mId);
+                    Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

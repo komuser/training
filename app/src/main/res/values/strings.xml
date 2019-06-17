@@ -4,4 +4,7 @@
     <string name="upload">アップロード</string>
     <string name="delete">レコード削除</string>
     <string name="detail">詳細</string>
+    <string name="dialog_progress_title">アップロード中</string>
+    <string name="wait">しばらくお待ちください</string>
+    <string name="dialog_progress_cancel">キャンセル</string>
 </resources>

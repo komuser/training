@@ -16,6 +16,20 @@ public class BaseFragment extends Fragment {
             ((BaseActivity)base).onFragmentResult(getRequestCode(), getResult(), intent);
         }
     }
+
+    protected void showProgress() {
+        Activity base = getActivity();
+        if (base instanceof BaseActivity) {
+            ((BaseActivity)base).showProgress();
+        }
+    }
+
+    protected void dismissProgress() {
+        Activity base = getActivity();
+        if (base instanceof BaseActivity) {
+            ((BaseActivity)base).dismissProgress();
+        }
+    }
     protected int getRequestCode() {
         return BaseActivity.Request.REQUEST_NONE.ordinal();
     }

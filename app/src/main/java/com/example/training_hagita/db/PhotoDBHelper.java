@@ -51,27 +51,21 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insertValues(String id, String path, String title, String description) {
+    public long insertValues(String path, String title, String description) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PATH, path);
+        contentValues.put(COLUMN_FILE_NAME, title);
+        contentValues.put(COLUMN_DESCRIPTION, description);
+        long ret = db.insert(TABLE_NAME, null, contentValues);
+        return ret;
+    }
+
+    public int deleteValues(String  id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID, id);
-        contentValues.put(COLUMN_PATH, path);
-        contentValues.put(COLUMN_FILE_NAME, title);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-        db.insert(TABLE_NAME, null, contentValues);
-    }
-
-    public void deleteValues(SQLiteDatabase db) {
-        ContentValues contentValues = new ContentValues();
-        PhotoDao photoDao = new PhotoDao();
-        String id = photoDao.getId();
-        String path = photoDao.getPath();
-        String title = photoDao.getTitle();
-        String description = photoDao.getDescription();
-        contentValues.put(COLUMN_ID, id);
-        contentValues.put(COLUMN_PATH, path);
-        contentValues.put(COLUMN_FILE_NAME, title);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-        db.delete(TABLE_NAME, "", new String[]{id, path, title, description});
+        int ret = db.delete(TABLE_NAME, "", new String[]{id});
+        return ret;
     }
 }
