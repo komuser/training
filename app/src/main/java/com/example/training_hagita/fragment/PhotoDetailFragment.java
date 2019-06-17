@@ -28,6 +28,7 @@ public class PhotoDetailFragment extends BaseFragment {
     private String mTitle;
     private String mDescription;
     private View mView;
+    private PhotoDBHelper mDBHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
@@ -81,11 +82,11 @@ public class PhotoDetailFragment extends BaseFragment {
                 uploadRequester.addFile(mPath, mTitle);
                 uploadRequester.execute(UPLOAD_SERVER);
 
-                PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
-                photoDBHelper.insertValues(mId, mPath, mTitle, mDescription);
+                mDBHelper = new PhotoDBHelper(getActivity());
+                mDBHelper.insertValues(mId, mPath, mTitle, mDescription);
 
-                Intent intent = new Intent();
-                finishFragment(intent);
+//                Intent intent = new Intent();
+//                finishFragment(intent);
             }
         });
         
@@ -94,8 +95,7 @@ public class PhotoDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
-                SQLiteDatabase sqLiteDatabase = photoDBHelper.getWritableDatabase();
-                photoDBHelper.deleteValues(sqLiteDatabase);
+                photoDBHelper.deleteValues(mId);
                 Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
             }
         });
