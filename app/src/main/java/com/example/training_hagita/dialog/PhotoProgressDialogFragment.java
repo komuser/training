@@ -36,10 +36,6 @@ public class PhotoProgressDialogFragment extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(true);
         setDialog(dialog);
-        Window window = dialog.getWindow();
-        if (window != null) {
-            setWindow(window);
-        }
         return dialog;
     }
 
@@ -66,18 +62,6 @@ public class PhotoProgressDialogFragment extends DialogFragment {
                 }
             }
         });
-    }
-
-    /**
-     * ウィンドウ設定。
-     * @param window ウィンドウ。
-     */
-    protected void setWindow(Window window) {
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.dimAmount = 0.9f;
-        window.setAttributes(lp);
     }
 
     /**
