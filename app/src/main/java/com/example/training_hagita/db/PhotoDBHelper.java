@@ -49,12 +49,11 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         return ret;
     }
 
-    public int deleteValues(String id) {
+    public void deleteValues(String id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID, id);
-        int ret = db.delete(TABLE_NAME, "", new String[]{id});
-        return ret;
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{id});
     }
 
     private void createTable(SQLiteDatabase db) {

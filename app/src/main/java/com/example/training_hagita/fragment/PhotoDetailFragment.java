@@ -93,8 +93,7 @@ public class PhotoDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!KeyLock.isKeyHit()) {
-                    PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
-                    photoDBHelper.deleteValues(mId);
+                    mDBHelper.deleteValues(mId);
                     Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
                 }
             }
