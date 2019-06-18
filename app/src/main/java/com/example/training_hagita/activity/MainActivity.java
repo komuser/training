@@ -22,8 +22,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         PhotoDBHelper photoDBHelper = new PhotoDBHelper(this);
-        SQLiteDatabase sqLiteDatabase = photoDBHelper.getWritableDatabase();
-        photoDBHelper.onCreate(sqLiteDatabase);
+        photoDBHelper.getWritableDatabase();
 
         checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_PERMISSION);
     }

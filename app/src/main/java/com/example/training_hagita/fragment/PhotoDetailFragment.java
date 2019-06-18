@@ -38,6 +38,7 @@ public class PhotoDetailFragment extends BaseFragment {
         mView = inflater.inflate(R.layout.fragment_detail, container, false);
         Bundle bundle = getArguments();
         if (bundle != null) {
+            mId = bundle.getString("ID", "");
             mPath = bundle.getString("PATH", "");
             mTitle = bundle.getString("FILE_NAME", "");
             TextView fileNameText = (TextView) mView.findViewById(R.id.file_name);
@@ -75,12 +76,6 @@ public class PhotoDetailFragment extends BaseFragment {
                             dismissProgress();
                         }
                     });
-                    Bundle bundle = getArguments();
-                    if (bundle != null) {
-                        mPath = bundle.getString("PATH", "");
-                        mTitle = bundle.getString("FILE_NAME", "");
-                        mDescription = bundle.getString("DESCRIPTION", "");
-                    }
                     uploadRequester.addFile(mPath, mTitle);
                     uploadRequester.execute(UPLOAD_SERVER);
 
@@ -98,10 +93,6 @@ public class PhotoDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!KeyLock.isKeyHit()) {
-                    Bundle bundle = getArguments();
-                    if (bundle != null) {
-                        mId = bundle.getString("ID", "");
-                    }
                     PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
                     photoDBHelper.deleteValues(mId);
                     Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
