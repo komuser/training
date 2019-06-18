@@ -21,34 +21,22 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "TblPhoto.db";
     public static final int DB_VERSION = 1;
 
-    private static final String CREATE_TABLE =
-            "create table " + TABLE_NAME + " (" +
-                    COLUMN_ID + " integer primary key autoincrement, " +
-                    COLUMN_FILE_NAME + " text, " +
-                    COLUMN_PATH + " text, " +
-                    COLUMN_DESCRIPTION + " text)";
-
-    private static final String DROP_TABLE =
-            "drop table if exists " + TABLE_NAME;
-
     public PhotoDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            // テーブル作成
-            db.execSQL(DROP_TABLE);
-            db.execSQL(CREATE_TABLE);
-        } catch (Exception e) {
-            Log.d(TAG, "エラー：" + e);
-        }
+        // テーブル作成
+        createTable(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // テーブル削除
+        dropTable(db);
+        // 新しいテーブルを作成
+        createTable(db);
     }
 
     public long insertValues(String path, String title, String description) {
@@ -61,11 +49,27 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         return ret;
     }
 
-    public int deleteValues(String  id) {
+    public int deleteValues(String id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID, id);
         int ret = db.delete(TABLE_NAME, "", new String[]{id});
         return ret;
+    }
+
+    private void createTable(SQLiteDatabase db) {
+        String Sql =
+                "create table " + TABLE_NAME + " (" +
+                        COLUMN_ID + " integer primary key autoincrement, " +
+                        COLUMN_FILE_NAME + " text, " +
+                        COLUMN_PATH + " text, " +
+                        COLUMN_DESCRIPTION + " text)";
+        db.execSQL(Sql);
+    }
+
+    private void dropTable(SQLiteDatabase db) {
+        String Sql =
+                "drop table if exists " + TABLE_NAME;
+        db.execSQL(Sql);
     }
 }
