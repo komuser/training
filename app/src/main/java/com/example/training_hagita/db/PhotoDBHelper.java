@@ -21,57 +21,54 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "TblPhoto.db";
     public static final int DB_VERSION = 1;
 
-    private static final String CREATE_TABLE =
-            "create table " + TABLE_NAME + " (" +
-                    COLUMN_ID + " integer primary key autoincrement, " +
-                    COLUMN_FILE_NAME + " text, " +
-                    COLUMN_PATH + " text, " +
-                    COLUMN_DESCRIPTION + " text)";
-
-    private static final String DROP_TABLE =
-            "drop table if exists " + TABLE_NAME;
-
     public PhotoDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            // テーブル作成
-            db.execSQL(DROP_TABLE);
-            db.execSQL(CREATE_TABLE);
-        } catch (Exception e) {
-            Log.d(TAG, "エラー：" + e);
-        }
+        // テーブル作成
+        createTable(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // テーブル削除
+        dropTable(db);
+        // 新しいテーブルを作成
+        createTable(db);
     }
 
-    public void insertValues(String id, String path, String title, String description) {
+    public long insertValues(String path, String title, String description) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PATH, path);
+        contentValues.put(COLUMN_FILE_NAME, title);
+        contentValues.put(COLUMN_DESCRIPTION, description);
+        long ret = db.insert(TABLE_NAME, null, contentValues);
+        return ret;
+    }
+
+    public void deleteValues(String id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID, id);
-        contentValues.put(COLUMN_PATH, path);
-        contentValues.put(COLUMN_FILE_NAME, title);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-        db.insert(TABLE_NAME, null, contentValues);
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{id});
     }
 
-    public void deleteValues(SQLiteDatabase db) {
-        ContentValues contentValues = new ContentValues();
-        PhotoDao photoDao = new PhotoDao();
-        String id = photoDao.getId();
-        String path = photoDao.getPath();
-        String title = photoDao.getTitle();
-        String description = photoDao.getDescription();
-        contentValues.put(COLUMN_ID, id);
-        contentValues.put(COLUMN_PATH, path);
-        contentValues.put(COLUMN_FILE_NAME, title);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-        db.delete(TABLE_NAME, "", new String[]{id, path, title, description});
+    private void createTable(SQLiteDatabase db) {
+        String Sql =
+                "create table " + TABLE_NAME + " (" +
+                        COLUMN_ID + " integer primary key autoincrement, " +
+                        COLUMN_FILE_NAME + " text, " +
+                        COLUMN_PATH + " text, " +
+                        COLUMN_DESCRIPTION + " text)";
+        db.execSQL(Sql);
+    }
+
+    private void dropTable(SQLiteDatabase db) {
+        String Sql =
+                "drop table if exists " + TABLE_NAME;
+        db.execSQL(Sql);
     }
 }

@@ -7,10 +7,13 @@ import android.os.Build;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.training_hagita.dialog.PhotoProgressDialogFragment;
 import com.example.training_hagita.fragment.BaseFragment;
 import com.example.training_hagita.R;
 
 public class BaseActivity extends AppCompatActivity {
+
+    private PhotoProgressDialogFragment mProgressDialog;
 
     public enum Request {
         REQUEST_NONE,
@@ -18,12 +21,21 @@ public class BaseActivity extends AppCompatActivity {
         REQUEST_PHOTO_DETAIL;
     }
 
+    /**
+     * Fragment起動処理
+     * @param fragment
+     */
     protected void startFragmentForResult(BaseFragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
 
+    /**
+     * パーミッションチェック
+     * @param permission
+     * @param requestCode
+     */
     protected void checkPermission(String permission, int requestCode) {
         String[] list = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
         int[] result = new int[]{PackageManager.PERMISSION_GRANTED};
@@ -42,5 +54,17 @@ public class BaseActivity extends AppCompatActivity {
 
     public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
 
+    }
+
+    public void showProgress() {
+        mProgressDialog = new PhotoProgressDialogFragment();
+        mProgressDialog.show(this);
+    }
+
+    public void dismissProgress() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismissAllowingStateLoss();
+            mProgressDialog = null;
+        }
     }
 }

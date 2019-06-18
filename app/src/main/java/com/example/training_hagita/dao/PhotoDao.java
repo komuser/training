@@ -3,63 +3,107 @@ package com.example.training_hagita.dao;
 import android.graphics.Bitmap;
 
 public class PhotoDao {
-    // 画像
+    /**
+     * 画像
+     */
     private Bitmap image;
-    // ID
+
+    /**
+     * ID
+     */
     private String id;
-    // ファイルパス
+
+    /**
+     * ファイルパス
+     */
     private String path;
-    // タイトル
+
+    /**
+     * タイトル
+     */
     private String title;
-    // 説明
+
+    /**
+     * 説明
+     */
     private String mDescription;
 
-    // 画像取得
+    /**
+     * 画像取得
+     * @return 画像
+     */
     public Bitmap getImage() {
         return this.image;
     }
 
-    // 画像設定
+    /**
+     * 画像設定
+     * @param image
+     */
     public void setImage(Bitmap image) {
         this.image = image;
     }
 
-    // ID取得
+    /**
+     * 画像ID取得
+     * @return ID
+     */
     public String getId() {
         return this.id;
     }
 
-    // ID設定
+    /**
+     * 画像ID設定
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
-    // ファイルパス取得
+    /**
+     * ファイルパス取得
+     * @return ファイルパス
+     */
     public String getPath() {
         return this.path;
     }
 
-    // ファイルパス設定
+    /**
+     * ファイルパス設定
+     * @param path
+     */
     public void setPath(String path) {
         this.path = path;
     }
 
-    // タイトル取得
+    /**
+     * ファイル名取得
+     * @return ファイル名
+     */
     public String getTitle() {
         return this.title;
     }
 
-    // タイトル設定
+    /**
+     * ファイル名設定
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    // 説明取得
+    /**
+     * ファイルの説明情報の取得
+     * @return ファイルの説明情報
+     */
     public String getDescription() {
         return mDescription;
     }
 
-    // 説明設定
+    /**
+     * ファイルの説明情報設定
+     * @param description
+     */
     public void setDescription(String description) {
         this.mDescription = description;
     }

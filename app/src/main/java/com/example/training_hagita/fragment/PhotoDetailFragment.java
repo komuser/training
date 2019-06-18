@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.training_hagita.R;
+import com.example.training_hagita.Util.KeyLock;
 import com.example.training_hagita.asynctask.UploadCallback;
 import com.example.training_hagita.asynctask.UploadRequester;
 import com.example.training_hagita.activity.BaseActivity;
@@ -28,6 +29,7 @@ public class PhotoDetailFragment extends BaseFragment {
     private String mTitle;
     private String mDescription;
     private View mView;
+    private PhotoDBHelper mDBHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
@@ -36,6 +38,7 @@ public class PhotoDetailFragment extends BaseFragment {
         mView = inflater.inflate(R.layout.fragment_detail, container, false);
         Bundle bundle = getArguments();
         if (bundle != null) {
+            mId = bundle.getString("ID", "");
             mPath = bundle.getString("PATH", "");
             mTitle = bundle.getString("FILE_NAME", "");
             TextView fileNameText = (TextView) mView.findViewById(R.id.file_name);
@@ -55,48 +58,44 @@ public class PhotoDetailFragment extends BaseFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadRequester uploadRequester = new UploadRequester(new UploadCallback() {
-                    @Override
-                    public void onPreExecute() {
+                if (!KeyLock.isKeyHit()) {
+                    showProgress();
+                    UploadRequester uploadRequester = new UploadRequester(new UploadCallback() {
+                        @Override
+                        public void onPreExecute() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onProgressUpdate() {
+                        @Override
+                        public void onProgressUpdate() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onPostExecute(String string) {
+                        @Override
+                        public void onPostExecute(String string) {
+                            dismissProgress();
+                        }
+                    });
+                    uploadRequester.addFile(mPath, mTitle);
+                    uploadRequester.execute(UPLOAD_SERVER);
 
-                    }
-                });
-                Bundle bundle = getArguments();
-                if (bundle != null) {
-                    mId = bundle.getString("ID", "");
-                    mPath = bundle.getString("PATH","");
-                    mTitle = bundle.getString("FILE_NAME", "");
-                    mDescription = bundle.getString("DESCRIPTION", "");
+                    mDBHelper = new PhotoDBHelper(getActivity());
+                    mDBHelper.insertValues(mPath, mTitle, mDescription);
+
+//                Intent intent = new Intent();
+//                finishFragment(intent);
                 }
-                uploadRequester.addFile(mPath, mTitle);
-                uploadRequester.execute(UPLOAD_SERVER);
-
-                PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
-                photoDBHelper.insertValues(mId, mPath, mTitle, mDescription);
-
-                Intent intent = new Intent();
-                finishFragment(intent);
             }
         });
-        
+
         Button deleteButton = view.findViewById(R.id.delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhotoDBHelper photoDBHelper = new PhotoDBHelper(getActivity());
-                SQLiteDatabase sqLiteDatabase = photoDBHelper.getWritableDatabase();
-                photoDBHelper.deleteValues(sqLiteDatabase);
-                Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
+                if (!KeyLock.isKeyHit()) {
+                    mDBHelper.deleteValues(mId);
+                    Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

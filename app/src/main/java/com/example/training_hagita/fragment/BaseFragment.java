@@ -10,10 +10,28 @@ public class BaseFragment extends Fragment {
 
     private int mResult = Activity.RESULT_OK;
 
+    /**
+     * Fragmentの処理結果をActivityに渡す
+     * @param intent
+     */
     protected void finishFragment(Intent intent) {
         Activity base = getActivity();
         if (base instanceof BaseActivity) {
             ((BaseActivity)base).onFragmentResult(getRequestCode(), getResult(), intent);
+        }
+    }
+
+    protected void showProgress() {
+        Activity base = getActivity();
+        if (base instanceof BaseActivity) {
+            ((BaseActivity)base).showProgress();
+        }
+    }
+
+    protected void dismissProgress() {
+        Activity base = getActivity();
+        if (base instanceof BaseActivity) {
+            ((BaseActivity)base).dismissProgress();
         }
     }
     protected int getRequestCode() {
