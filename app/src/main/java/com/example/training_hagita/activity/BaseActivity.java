@@ -21,12 +21,21 @@ public class BaseActivity extends AppCompatActivity {
         REQUEST_PHOTO_DETAIL;
     }
 
+    /**
+     * Fragment起動処理
+     * @param fragment
+     */
     protected void startFragmentForResult(BaseFragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
 
+    /**
+     * パーミッションチェック
+     * @param permission
+     * @param requestCode
+     */
     protected void checkPermission(String permission, int requestCode) {
         String[] list = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
         int[] result = new int[]{PackageManager.PERMISSION_GRANTED};

@@ -28,6 +28,12 @@ public class MainActivity extends BaseActivity {
         checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_PERMISSION);
     }
 
+    /**
+     * パーミッションチェックのコールバック
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION) {
@@ -42,6 +48,12 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Fragmentの表示切替のコールバック
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == Request.REQUEST_PHOTO_LIST.ordinal()) {

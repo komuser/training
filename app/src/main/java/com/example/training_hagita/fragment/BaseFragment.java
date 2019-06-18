@@ -10,6 +10,10 @@ public class BaseFragment extends Fragment {
 
     private int mResult = Activity.RESULT_OK;
 
+    /**
+     * Fragmentの処理結果をActivityに渡す
+     * @param intent
+     */
     protected void finishFragment(Intent intent) {
         Activity base = getActivity();
         if (base instanceof BaseActivity) {
