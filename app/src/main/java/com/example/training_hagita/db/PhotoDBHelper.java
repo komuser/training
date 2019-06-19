@@ -39,21 +39,27 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         createTable(db);
     }
 
-    public long insertValues(String path, String title, String description) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_PATH, path);
-        contentValues.put(COLUMN_FILE_NAME, title);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-        long ret = db.insert(TABLE_NAME, null, contentValues);
-        return ret;
-    }
-
-    public void deleteValues(String id) {
+    public long insertValues(String id, String path, String title, String description) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID, id);
-        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{id});
+        contentValues.put(COLUMN_PATH, path);
+        contentValues.put(COLUMN_FILE_NAME, title);
+        contentValues.put(COLUMN_DESCRIPTION, description);
+
+        long registrationNumber = db.insert(TABLE_NAME, null, contentValues);
+        db.close();
+        return registrationNumber;
+    }
+
+    public int deleteValues(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_ID, id);
+
+        int deleteNumber = db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{id});
+        db.close();
+        return deleteNumber;
     }
 
     private void createTable(SQLiteDatabase db) {
