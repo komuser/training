@@ -54,6 +54,8 @@ public class PhotoDetailFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
 
+        mDBHelper = new PhotoDBHelper(getActivity());
+
         Button button = view.findViewById(R.id.upload);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +76,17 @@ public class PhotoDetailFragment extends BaseFragment {
                         @Override
                         public void onPostExecute(String string) {
                             dismissProgress();
+
+                            long registrationNumber = mDBHelper.insertValues(mId, mPath, mTitle, mDescription);
+                            if (registrationNumber < 0) {
+                                Toast.makeText(getActivity(), "データ登録に失敗しました", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "データを登録しました", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     uploadRequester.addFile(mPath, mTitle);
                     uploadRequester.execute(UPLOAD_SERVER);
-
-                    mDBHelper = new PhotoDBHelper(getActivity());
-                    mDBHelper.insertValues(mPath, mTitle, mDescription);
 
 //                Intent intent = new Intent();
 //                finishFragment(intent);
@@ -93,8 +99,12 @@ public class PhotoDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!KeyLock.isKeyHit()) {
-                    mDBHelper.deleteValues(mId);
-                    Toast.makeText(getActivity(), "レコードを削除しました", Toast.LENGTH_SHORT).show();
+                    int deleteNumber = mDBHelper.deleteValues(mId);
+                    if (deleteNumber <= 0) {
+                        Toast.makeText(getActivity(), "削除するデータがありません", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "データを削除しました", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
