@@ -79,11 +79,22 @@ public class PhotoDetailFragment extends BaseFragment {
 
                             long registrationNumber = mDBHelper.insertValues(mId, mPath, mTitle, mDescription);
                             if (registrationNumber < 0) {
-                                Toast.makeText(getActivity(), "データ登録に失敗しました", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "既に登録済みです", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), "データを登録しました", Toast.LENGTH_SHORT).show();
                             }
                         }
+
+                        @Override
+                        public void onCancelled() {
+                            dismissProgress();
+                            Toast.makeText(getActivity(), "データ登録に失敗しました", Toast.LENGTH_SHORT).show();
+                        }
+
+//                        @Override
+//                        public void onAccessError() {
+//                            dismissProgress();
+//                        }
                     });
                     uploadRequester.addFile(mPath, mTitle);
                     uploadRequester.execute(UPLOAD_SERVER);

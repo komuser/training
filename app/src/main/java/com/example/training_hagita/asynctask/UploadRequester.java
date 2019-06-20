@@ -147,6 +147,7 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
             }
         } catch (IOException e) {
             Log.e(TAG, e.toString());
+            cancel(true);
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -158,6 +159,10 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
     // 後処理
     public void onPostExecute(String string) {
         mCallback.onPostExecute(string);
+    }
+
+    public void onCancelled() {
+        mCallback.onCancelled();
     }
 
     public void addFile(String path, String title) {
