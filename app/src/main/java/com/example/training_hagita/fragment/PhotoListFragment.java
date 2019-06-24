@@ -21,6 +21,11 @@ import com.example.training_hagita.activity.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 端末内の画像を表示するフラグメント
+ *
+ * @author Hagita
+ */
 public class PhotoListFragment extends BaseFragment {
 
     private static final String TAG = PhotoListFragment.class.getSimpleName();

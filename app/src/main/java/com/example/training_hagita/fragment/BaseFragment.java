@@ -6,6 +6,11 @@ import android.support.v4.app.Fragment;
 
 import com.example.training_hagita.activity.BaseActivity;
 
+/**
+ * Fragmentの基底クラス
+ *
+ * @author Hagita
+ */
 public class BaseFragment extends Fragment {
 
     private int mResult = Activity.RESULT_OK;
@@ -21,6 +26,9 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    /**
+     * Dialogの表示をActivityに渡す
+     */
     protected void showProgress() {
         Activity base = getActivity();
         if (base instanceof BaseActivity) {
@@ -28,6 +36,9 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    /**
+     * Dialogの
+     */
     protected void dismissProgress() {
         Activity base = getActivity();
         if (base instanceof BaseActivity) {

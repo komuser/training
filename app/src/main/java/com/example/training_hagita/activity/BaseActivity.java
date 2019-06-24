@@ -11,11 +11,17 @@ import com.example.training_hagita.dialog.PhotoProgressDialogFragment;
 import com.example.training_hagita.fragment.BaseFragment;
 import com.example.training_hagita.R;
 
+/**
+ * Activityの基底クラス
+ *
+ * @author Hagita
+ */
 public class BaseActivity extends AppCompatActivity {
 
     private PhotoProgressDialogFragment mProgressDialog;
 
     public enum Request {
+        // TODO:デフォルト値を入れたい
         REQUEST_NONE,
         REQUEST_PHOTO_LIST,
         REQUEST_PHOTO_DETAIL;
@@ -33,13 +39,14 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * パーミッションチェック
-     * @param permission
-     * @param requestCode
+     * @param permission パーミッション
+     * @param requestCode リクエストコード
      */
     protected void checkPermission(String permission, int requestCode) {
         String[] list = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
         int[] result = new int[]{PackageManager.PERMISSION_GRANTED};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // TODO:ここのチェックを減らしたい
             if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
                 // パーミッションありの場合
                 onRequestPermissionsResult(requestCode, list, result);
@@ -56,11 +63,17 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * ProgressBarの表示
+     */
     public void showProgress() {
         mProgressDialog = new PhotoProgressDialogFragment();
         mProgressDialog.show(this);
     }
 
+    /**
+     * ProgressBarを閉じる
+     */
     public void dismissProgress() {
         if (mProgressDialog != null) {
             mProgressDialog.dismissAllowingStateLoss();

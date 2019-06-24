@@ -1,0 +1,124 @@
+@startuml{plantuml_class_class.png}
+
+class MainActivity {
++ void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
++ void onFragmentResult(int requestCode, int resultCode, Intent intent)
+}
+
+class BaseActivity {
+- PhotoProgressDialogFragment mProgressDialog
+# void startFragmentForResult(BaseFragment fragment)
+# void checkPermission(String permission, int requestCode)
++ void onFragmentResult(int requestCode, int resultCode, Intent intent)
++ void showProgress()
++ void dismissProgress()
+}
+
+class PhotoListFragment {
+- View mView
+- RecyclerView mRecyclerView
+- List<PhotoDao> getList()
+# int getRequestCode()
+}
+
+class PhotoDetailFragment {
+- String mId
+- String mPath
+- String mTitle
+- String mDescription
+- View mView
+- PhotoDBHelper mDBHelper
+# int getRequestCode()
+}
+
+class UploadRequester {
+- Map<String, String> mParamList
+- List<String> mFileList
+- Map<String, String> mHeaderList
++ UploadRequester(UploadCallback callback)
++ void addFile(String path, String title)
+}
+
+class PhotoAdapter {
+- LayoutInflater mLayoutInflater
+- List<PhotoDao> mList
+# {abstract} void onRecyclerViewClicked(PhotoDao photoDao)
++ PhotoAdapter(List<PhotoDao> list)
+}
+
+class RecyclerViewHolder {
+- ImageView image
+- TextView title
+- TextView path
+RecyclerViewHolder(View view)
+}
+
+object RecyclerView.ViewHolder
+
+interface UploadCallback {
+void onPreExecute()
+void onProgressUpdate()
+void onPostExecute(String string)
+void onCancelled()
+}
+
+class PhotoDao {
+- Bitmap image
+- String id
+- String path
+- String title
+- String mDescription
+}
+
+class PhotoContract {
++ PhotoContract()
+}
+
+class PhotoDBHelper {
++ PhotoDBHelper(Context context)
++ long insertValues((String id, String path, String title, String description))
++ int deleteValues(String id)
+- void createTable(SQLiteDatabase db)
+- void dropTable(SQLiteDatabase db)
+}
+
+class PhotoProgressDialogFragment {
+- View.OnClickListener mListener
+# void setDialog(Dialog dialog)
+- void show(BaseActivity activity)
+}
+
+
+class BaseFragment {
+- int mResult
+# void finishFragment(Intent intent)
+# void showProgress()
+# void dismissProgress()
+}
+
+object SQLiteOpenHelper
+
+class Photo
+
+interface BaseColumns
+
+
+
+BaseActivity <|-- MainActivity
+BaseActivity -- PhotoProgressDialogFragment
+MainActivity -- PhotoListFragment
+MainActivity -- PhotoDetailFragment
+SQLiteOpenHelper <|-- PhotoDBHelper
+BaseFragment <|-- PhotoListFragment
+BaseFragment <|-- PhotoDetailFragment
+PhotoDetailFragment -- PhotoDBHelper
+UploadCallback <|.. UploadRequester
+UploadRequester -- PhotoDetailFragment
+PhotoContract -- PhotoDBHelper
+PhotoAdapter -- PhotoListFragment
+PhotoAdapter -- PhotoDao
+Photo -- PhotoContract
+BaseColumns <|.. Photo
+RecyclerView.ViewHolder <|-- RecyclerViewHolder
+
+@enduml

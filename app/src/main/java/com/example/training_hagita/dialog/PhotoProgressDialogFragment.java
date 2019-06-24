@@ -15,6 +15,11 @@ import com.example.training_hagita.R;
 import com.example.training_hagita.Util.KeyLock;
 import com.example.training_hagita.activity.BaseActivity;
 
+/**
+ * ProgressDialogを表示するフラグメント
+ *
+ * @author Hagita
+ */
 public class PhotoProgressDialogFragment extends DialogFragment {
 
     private static final String TAG = PhotoProgressDialogFragment.class.getName();

@@ -3,7 +3,6 @@ package com.example.training_hagita.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -12,6 +11,11 @@ import com.example.training_hagita.db.PhotoDBHelper;
 import com.example.training_hagita.fragment.PhotoDetailFragment;
 import com.example.training_hagita.fragment.PhotoListFragment;
 
+/**
+ * MainActivity
+ *
+ * @author Hagita
+ */
 public class MainActivity extends BaseActivity {
 
     public static final int REQUEST_PERMISSION = 1;

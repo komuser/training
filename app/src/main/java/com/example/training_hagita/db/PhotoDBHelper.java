@@ -4,9 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import com.example.training_hagita.dao.PhotoDao;
 
 import static com.example.training_hagita.db.PhotoContract.Photo.COLUMN_DESCRIPTION;
 import static com.example.training_hagita.db.PhotoContract.Photo.COLUMN_FILE_NAME;
@@ -14,6 +11,11 @@ import static com.example.training_hagita.db.PhotoContract.Photo.COLUMN_ID;
 import static com.example.training_hagita.db.PhotoContract.Photo.COLUMN_PATH;
 import static com.example.training_hagita.db.PhotoContract.Photo.TABLE_NAME;
 
+/**
+ * DBのヘルパークラス
+ *
+ * @author Hagita
+ */
 public class PhotoDBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = PhotoDBHelper.class.getSimpleName();
@@ -21,6 +23,11 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "TblPhoto.db";
     public static final int DB_VERSION = 1;
 
+    /**
+     * コンストラクタ
+     *
+     * @param context
+     */
     public PhotoDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -39,6 +46,15 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         createTable(db);
     }
 
+    /**
+     * DBにデータをinsertする
+     *
+     * @param id
+     * @param path
+     * @param title
+     * @param description
+     * @return
+     */
     public long insertValues(String id, String path, String title, String description) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -52,6 +68,12 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         return registrationNumber;
     }
 
+    /**
+     * DBのデータを削除する
+     *
+     * @param id
+     * @return
+     */
     public int deleteValues(String id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -62,6 +84,11 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         return deleteNumber;
     }
 
+    /**
+     * テーブル作成
+     *
+     * @param db
+     */
     private void createTable(SQLiteDatabase db) {
         String Sql =
                 "create table " + TABLE_NAME + " (" +
@@ -72,6 +99,11 @@ public class PhotoDBHelper extends SQLiteOpenHelper {
         db.execSQL(Sql);
     }
 
+    /**
+     * テーブル削除
+     *
+     * @param db
+     */
     private void dropTable(SQLiteDatabase db) {
         String Sql =
                 "drop table if exists " + TABLE_NAME;
