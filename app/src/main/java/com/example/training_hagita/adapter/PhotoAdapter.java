@@ -13,21 +13,39 @@ import com.example.training_hagita.R;
 
 import java.util.List;
 
+/**
+ * RecyclerViewのAdapter
+ *
+ * @author Hagita
+ */
 public abstract class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.RecyclerViewHolder> {
     private LayoutInflater mLayoutInflater;
     private List<PhotoDao> mList;
 
     protected abstract void onRecyclerViewClicked(PhotoDao photoDao);
 
+    /**
+     * コンストラクタ
+     *
+     * @param list
+     */
     public PhotoAdapter(List<PhotoDao> list) {
         this.mList = list;
     }
 
+    /**
+     * RecyclerViewのViewHolder
+     */
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
         private TextView title;
         private TextView path;
 
+        /**
+         * コンストラクタ
+         *
+         * @param view
+         */
         RecyclerViewHolder(View view) {
             super(view);
             this.image = (ImageView) view.findViewById(R.id.image);

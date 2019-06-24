@@ -2,6 +2,11 @@ package com.example.training_hagita.dao;
 
 import android.graphics.Bitmap;
 
+/**
+ * 画像情報のDao
+ *
+ * @author Hagita
+ */
 public class PhotoDao {
     /**
      * 画像

@@ -19,6 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * アップロード処理のRequester
+ *
+ * @author Hagita
+ */
 public class UploadRequester extends AsyncTask<String, Void, String> {
 
     private static final String TAG = UploadRequester.class.getSimpleName();
@@ -34,7 +39,11 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
     // コールバック
     private UploadCallback mCallback;
 
-    // コンストラクタ
+    /**
+     * コンストラクタ
+     *
+     * @param callback
+     */
     public UploadRequester(UploadCallback callback) {
         mCallback = callback;
     }
@@ -147,6 +156,7 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
             }
         } catch (IOException e) {
             Log.e(TAG, e.toString());
+            cancel(true);
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -156,10 +166,22 @@ public class UploadRequester extends AsyncTask<String, Void, String> {
     }
 
     // 後処理
+    @Override
     public void onPostExecute(String string) {
         mCallback.onPostExecute(string);
     }
 
+    @Override
+    public void onCancelled() {
+        mCallback.onCancelled();
+    }
+
+    /**
+     * ファイルの追加
+     *
+     * @param path
+     * @param title
+     */
     public void addFile(String path, String title) {
         mFileList.add(path);
     }
