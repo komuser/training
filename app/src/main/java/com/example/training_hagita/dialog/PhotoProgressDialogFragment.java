@@ -1,15 +1,12 @@
 package com.example.training_hagita.dialog;
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.training_hagita.R;
 import com.example.training_hagita.Util.KeyLock;
@@ -27,6 +24,14 @@ public class PhotoProgressDialogFragment extends DialogFragment {
      * 選択リスナー。
      */
     private View.OnClickListener mListener = null;
+
+    /**
+     * シングルトン
+     * @return
+     */
+    public static PhotoProgressDialogFragment newInstance() {
+        return new PhotoProgressDialogFragment();
+    }
 
     /**
      * ダイアログ作成。

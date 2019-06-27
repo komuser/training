@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.training_hagita.dialog.PhotoErrorDialogFragment;
 import com.example.training_hagita.dialog.PhotoProgressDialogFragment;
 import com.example.training_hagita.fragment.BaseFragment;
 import com.example.training_hagita.R;
@@ -19,6 +20,7 @@ import com.example.training_hagita.R;
 public class BaseActivity extends AppCompatActivity {
 
     private PhotoProgressDialogFragment mProgressDialog;
+    private PhotoErrorDialogFragment mErrorDialog;
 
     public enum Request {
         // TODO:デフォルト値を入れたい
@@ -67,7 +69,7 @@ public class BaseActivity extends AppCompatActivity {
      * ProgressBarの表示
      */
     public void showProgress() {
-        mProgressDialog = new PhotoProgressDialogFragment();
+        mProgressDialog = PhotoProgressDialogFragment.newInstance();
         mProgressDialog.show(this);
     }
 
@@ -79,5 +81,13 @@ public class BaseActivity extends AppCompatActivity {
             mProgressDialog.dismissAllowingStateLoss();
             mProgressDialog = null;
         }
+    }
+
+    /**
+     * ErrorDialogの表示
+     */
+    public void showError() {
+        mErrorDialog = PhotoErrorDialogFragment.newInstance();
+        mErrorDialog.show(this);
     }
 }
