@@ -37,12 +37,22 @@ public class BaseFragment extends Fragment {
     }
 
     /**
-     * Dialogの
+     * Dialogを閉じる
      */
     protected void dismissProgress() {
         Activity base = getActivity();
         if (base instanceof BaseActivity) {
             ((BaseActivity)base).dismissProgress();
+        }
+    }
+
+    /**
+     * ErrorDialogの表示をActivityに渡す
+     */
+    protected void showError() {
+        Activity base = getActivity();
+        if (base instanceof BaseActivity) {
+            ((BaseActivity)base).showError();
         }
     }
     protected int getRequestCode() {

@@ -1,7 +1,6 @@
 package com.example.training_hagita.fragment;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,9 +14,10 @@ import android.widget.Toast;
 
 import com.example.training_hagita.R;
 import com.example.training_hagita.Util.KeyLock;
+import com.example.training_hagita.activity.BaseActivity;
 import com.example.training_hagita.asynctask.UploadCallback;
 import com.example.training_hagita.asynctask.UploadRequester;
-import com.example.training_hagita.activity.BaseActivity;
+import com.example.training_hagita.dao.ResultDao;
 import com.example.training_hagita.db.PhotoDBHelper;
 
 public class PhotoDetailFragment extends BaseFragment {
@@ -77,30 +77,25 @@ public class PhotoDetailFragment extends BaseFragment {
                         public void onPostExecute(String string) {
                             dismissProgress();
 
-                            long registrationNumber = mDBHelper.insertValues(mId, mPath, mTitle, mDescription);
-                            if (registrationNumber < 0) {
-                                Toast.makeText(getActivity(), "既に登録済みです", Toast.LENGTH_SHORT).show();
+                            ResultDao resultDao = new ResultDao(string);
+                            if (resultDao.isResult()) {
+                                mDBHelper.insertValues(mId, mPath, mTitle, mDescription);
+
+                                Intent intent = new Intent();
+                                finishFragment(intent);
                             } else {
-                                Toast.makeText(getActivity(), "データを登録しました", Toast.LENGTH_SHORT).show();
+                                showError();
                             }
                         }
 
                         @Override
                         public void onCancelled() {
                             dismissProgress();
-                            Toast.makeText(getActivity(), "データ登録に失敗しました", Toast.LENGTH_SHORT).show();
+                            showError();
                         }
-
-//                        @Override
-//                        public void onAccessError() {
-//                            dismissProgress();
-//                        }
                     });
                     uploadRequester.addFile(mPath, mTitle);
                     uploadRequester.execute(UPLOAD_SERVER);
-
-//                Intent intent = new Intent();
-//                finishFragment(intent);
                 }
             }
         });
